@@ -1,9 +1,25 @@
+import React, { useState } from 'react'
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
-import React from 'react'
 import styles from './style'
 
 export default function CreateUser() {
-    let errorCreateUser = null
+    const [nome, setNome] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [errorCreateUser, setErrorCreateUser] = useState(null)
+
+    const validate = () => {
+        if (nome == "") {
+            setErrorCreateUser("Informe seu nome")
+        } else if (email == "") {
+            setErrorCreateUser("Informe seu e-mail")
+        } else if (password == ""){
+            setErrorCreateUser("Informe uma senha")
+        } else {
+            setErrorCreateUser(null)
+            // createUser()
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -14,21 +30,28 @@ export default function CreateUser() {
             <TextInput
                 style={styles.input}
                 placeholder='Nome'
+                value={nome}
+                onChangeText={setNome}
             />
 
             <TextInput
                 style={styles.input}
                 placeholder='E-mail'
+                value={email}
+                onChangeText={setEmail}
             />
 
             <TextInput
                 style={styles.input}
                 secureTextEntry={true}
                 placeholder='Senha'
+                value={password}
+                onChangeText={setPassword}
             />
 
             <TouchableOpacity
                 style={styles.button}
+                onPress={validate}
             >
                 <Text style={styles.textButton}>Criar usuário</Text>
             </TouchableOpacity>
