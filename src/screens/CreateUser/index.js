@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
+import { firebase } from '../../services/firebaseConfig'
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import styles from './style'
+const db = getFirestore(firebase);
 
-export default function CreateUser() {
+export default function CreateUser({ navigation }) {
     const [nome, setNome] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -13,12 +17,31 @@ export default function CreateUser() {
             setErrorCreateUser("Informe seu nome")
         } else if (email == "") {
             setErrorCreateUser("Informe seu e-mail")
-        } else if (password == ""){
+        } else if (password == "") {
             setErrorCreateUser("Informe uma senha")
         } else {
             setErrorCreateUser(null)
-            // createUser()
+            createUser()
         }
+    }
+
+    const createUser = () => {
+        const auth = getAuth();
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                setDoc(doc(db, "users", user.uid), {
+                    nome: nome,
+                    email: email
+                });
+                navigation.navigate('Tabs')
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                setErrorCreateUser(errorMessage)
+            });
+
     }
 
     return (

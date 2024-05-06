@@ -15,7 +15,7 @@ export default function App() {
     return (
         <NavigationContainer>
             <Stack.Navigator
-                initialRouteName="Tabs"
+                initialRouteName="Login"
                 screenOptions={{
                     headerTintColor: '#FFF',
                     headerTitleAlign: 'center',
