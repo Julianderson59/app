@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import { firebase } from '../../services/firebaseConfig'
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { getDatabase, push, ref, set } from "firebase/database";
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import styles from './style'
-const db = getFirestore(firebase);
+// const db = getFirestore(firebase);
+const db = getDatabase();
 
 export default function CreateUser({ navigation }) {
     const [nome, setNome] = useState("")
@@ -30,10 +32,17 @@ export default function CreateUser({ navigation }) {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                setDoc(doc(db, "users", user.uid), {
+
+                /* setDoc(doc(db, "users", user.uid), {
+                    nome: nome,
+                    email: email
+                }); */
+
+                set(ref(db, 'users/' + user.uid), {
                     nome: nome,
                     email: email
                 });
+
                 navigation.navigate('Tabs')
             })
             .catch((error) => {

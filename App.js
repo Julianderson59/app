@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Login from './src/screens/Login'
 import CreateUser from './src/screens/CreateUser'
+import CreateTask from './src/screens/CreateTask'
 import Home from './src/screens/Home';
 import About from './src/screens/About';
 import Account from './src/screens/Account';
@@ -27,6 +28,8 @@ export default function App() {
 
                 <Stack.Screen name="CreateUser" component={CreateUser} options={{ title: 'Cadastro de Usuário'}} />
 
+                <Stack.Screen name="CreateTask" component={CreateTask} options={{ title: 'Cadastro de Tarefa'}} />
+
                 <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
 
             </Stack.Navigator>
@@ -49,7 +52,7 @@ function Tabs() {
                 headerStyle: { backgroundColor: '#F60' }
             }}
         >
-            <Tab.Screen name="Início" component={Home}
+            <Tab.Screen name="Tarefas" component={Home}
                 options={{
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons name="home" color={color} size={32} />
