@@ -17,6 +17,10 @@ const styles = StyleSheet.create({
         gap: 10,
     },
 
+    action: {
+        flexDirection: 'row'
+    },
+
     data: {
         color: '#F60'
     },
