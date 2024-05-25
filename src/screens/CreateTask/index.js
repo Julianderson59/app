@@ -1,6 +1,6 @@
 import { firebase } from '../../services/firebaseConfig'
 import { getDatabase, push, ref, set } from "firebase/database";
-import { View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, Button } from 'react-native'
 import { getAuth } from "firebase/auth";
 import React, { useState } from 'react'
 import styles from './style'
@@ -23,9 +23,14 @@ export default function CreateTask({ navigation }) {
         }
     }
 
+    // Função para criar terefa no banco
     const createTask = () => {
+        // Obtem a referência do nó "tasks" do usuário que tá logado
+        // "auth.currentUser.uid" é o id o usuário no banco
         const taskListRef = ref(db, 'tasks/' + auth.currentUser.uid);
+        // Define uma id para a nova tarefa
         const newTaskRef = push(taskListRef);
+        // Cria a tarefa no banco
         set(newTaskRef, {
             date: date,
             description: description

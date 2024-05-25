@@ -23,6 +23,8 @@ export default function CreateTask({ navigation, route }) {
         }
     }
 
+    // Função que atualiza registro no banco
+    // "auth.currentUser.uid" é o id do usuário logado
     const editTask = () => {
         const taskListRef = ref(db, 'tasks/' + auth.currentUser.uid + '/' + route.params.id);
         set(taskListRef, {
@@ -32,6 +34,7 @@ export default function CreateTask({ navigation, route }) {
         navigation.navigate('Tabs')
     }
 
+    // Função que recupera os dados da terefa do banco e seta nos inputs
     const recuperarDados = () => {
         onValue(ref(db, 'tasks/' + auth.currentUser.uid + '/' + route.params.id), (snapshot) => {
             setDate(snapshot.val().date)
@@ -39,6 +42,7 @@ export default function CreateTask({ navigation, route }) {
         });
     }
 
+    // Hook que chama da função que recupera dos dados da tarefa do banco logo que a tela é aberta
     useEffect(() => {
         recuperarDados();
     }, [])
