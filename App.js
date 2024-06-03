@@ -9,6 +9,7 @@ import EditTask from './src/screens/EditTask'
 import Tasks from './src/screens/Tasks';
 import About from './src/screens/About';
 import Account from './src/screens/Account';
+import ListaCity from './src/ListaCity';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -30,6 +31,8 @@ export default function App() {
                 <Stack.Screen name="CreateUser" component={CreateUser} options={{ title: 'Cadastro de Usuário'}} />
 
                 <Stack.Screen name="CreateTask" component={CreateTask} options={{ title: 'Cadastro de Tarefa'}} />
+
+                <Stack.Screen name="ListaCity" component={ListaCity} options={{ title: 'Lista de Cidades' }} />
 
                 <Stack.Screen name="EditTask" component={EditTask} options={{ title: 'Editar task'}} />
 

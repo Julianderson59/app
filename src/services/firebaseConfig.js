@@ -4,13 +4,14 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyDxHuwoghZFtcoo8Zs3gtr5NThnjJD0cpA",
-  authDomain: "pra-fazer-app---teste.firebaseapp.com",
-  projectId: "pra-fazer-app---teste",
-  storageBucket: "pra-fazer-app---teste.appspot.com",
-  messagingSenderId: "833869906364",
-  appId: "1:833869906364:web:f96bb4f319a427bedc2bb9"
+const firebaseConfig = { 
+  apiKey : "AIzaSyCrHjmTIgp72AS14gVZgCqJyTFXmEaYfFU" , 
+  authDomain: "pra-fazer-app-32ff7.firebaseapp.com",
+  databaseURL: "https://pra-fazer-app-32ff7-default-rtdb.firebaseio.com",
+  projectId: "pra-fazer-app-32ff7",
+  storageBucket: "pra-fazer-app-32ff7.appspot.com",
+  mensagensSenderId : "597820086422" , 
+  appId : "1:597820086422:web:20a630e667bc7aa7a34ab7" 
 };
 
 // Initialize Firebase

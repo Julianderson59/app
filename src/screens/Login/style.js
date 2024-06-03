@@ -2,8 +2,8 @@ import { StyleSheet } from "react-native"
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#F60",
-        padding: 30,
+        backgroundColor: "#F7EAF8",
+        padding: 20,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
@@ -14,24 +14,24 @@ const styles = StyleSheet.create({
     },
     alert: {
         fontSize: 18,
-        color: '#FFF',
+        color: '#710473',
         textAlign: 'center',
         marginBottom: 20,
     },
     input: {
         fontSize: 18,
         borderRadius: 10,
-        backgroundColor: '#FFF',
+        backgroundColor: '#D9D9D9',
         padding: 20,
         marginBottom: 20,
-        width: '100%'
+        width: '90%'
     },
     button: {
-        backgroundColor: '#070A52',
+        backgroundColor: '#710473',
         padding: 10,
         borderRadius: 10,
         marginBottom: 20,
-        width: '100%'
+        width: '40%'
     },
     textButton: {
         fontSize: 24,
@@ -39,17 +39,16 @@ const styles = StyleSheet.create({
         color: '#fff'
     },
     buttonCreate: {
+        backgroundColor: '#710473',
         padding: 10,
-        borderWidth: 1,
-        borderColor: '#FFFFFF',
         borderRadius: 10,
         marginBottom: 20,
-        width: '100%'
+        width: '40%'
     },
     buttonCreateText: {
         fontSize: 18,
         textAlign: 'center',
-        color: '#fff'
+        color: '#FFF'
     }
 })
 

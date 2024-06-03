@@ -1,5 +1,5 @@
 import { firebase } from '../../services/firebaseConfig'
-import { getDatabase, push, ref, set } from "firebase/database";
+import { getDatabase, push, ref, set, onValue } from "firebase/database";
 import { View, Text, TextInput, TouchableOpacity, Button } from 'react-native'
 import { getAuth } from "firebase/auth";
 import React, { useState } from 'react'
@@ -7,63 +7,76 @@ import styles from './style'
 const db = getDatabase();
 const auth = getAuth();
 
-export default function CreateTask({ navigation }) {
-    const [date, setDate] = useState("")
-    const [description, setDescription] = useState("")
-    const [errorCreateTask, setErrorCreateTask] = useState(null)
-
-    const validate = () => {
-        if (date == "") {
-            setErrorCreateTask("Informe a data da tarefa")
-        } else if (description == "") {
-            setErrorCreateTask("Informe a descrição da tareja")
-        } else {
-            setErrorCreateTask(null)
-            createTask()
-        }
-    }
-
     // Função para criar terefa no banco
-    const createTask = () => {
-        // Obtem a referência do nó "tasks" do usuário que tá logado
-        // "auth.currentUser.uid" é o id o usuário no banco
-        const taskListRef = ref(db, 'tasks/' + auth.currentUser.uid);
-        // Define uma id para a nova tarefa
-        const newTaskRef = push(taskListRef);
-        // Cria a tarefa no banco
-        set(newTaskRef, {
-            date: date,
-            description: description
-        });
-        navigation.navigate('Tabs')
+    export default function Comments({ navigation }) {
+        const [comment, setComment] = useState("");
+        const [error, setError] = useState(null);
+        const [commentsList, setCommentsList] = useState([]);
+    
+        const validate = () => {
+            if (comment === "") {
+                setError("Informe um comentário");
+            } else {
+                setError(null);
+                addComment();
+            }
+        };
+    
+        const addComment = () => {
+            if (auth.currentUser) {
+                const commentsRef = ref(db, 'comments/' + auth.currentUser.uid);
+                const newCommentRef = push(commentsRef);
+                set(newCommentRef, {
+                    comment: comment,
+                    date: new Date().toISOString()
+                }).then(() => {
+                    setComment("");
+                    fetchComments();
+                }).catch((error) => {
+                    setError(error.message);
+                });
+            } else {
+                setError("Usuário não está autenticado");
+            }
+        };
+    
+        const fetchComments = () => {
+            if (auth.currentUser) {
+                const commentsRef = ref(db, 'comments/' + auth.currentUser.uid);
+                onValue(commentsRef, (snapshot) => {
+                    const data = snapshot.val();
+                    if (data) {
+                        const commentsArray = Object.values(data);
+                        setCommentsList(commentsArray);
+                    } else {
+                        setCommentsList([]);
+                    }
+                });
+            }
+        };
+    
+    
+        return (
+            <View style={styles.container}>
+                {error && (
+                    <Text style={styles.alert}>{error}</Text>
+                )}
+    
+                <TextInput
+                    style={styles.input}
+                    placeholder='Adicione um comentário'
+                    value={comment}
+                    onChangeText={setComment}
+                />
+    
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={validate}
+                >
+                    <Text style={styles.textButton}>Adicionar Comentário</Text>
+                </TouchableOpacity>
+    
+        
+            </View>
+        );
     }
-
-    return (
-        <View style={styles.container}>
-            {errorCreateTask != null && (
-                <Text style={styles.alert}>{errorCreateTask}</Text>
-            )}
-
-            <TextInput
-                style={styles.input}
-                placeholder='Data'
-                value={date}
-                onChangeText={setDate}
-            />
-
-            <TextInput
-                style={styles.input}
-                placeholder='Descrição'
-                value={description}
-                onChangeText={setDescription}
-            />
-
-            <TouchableOpacity
-                style={styles.button}
-                onPress={validate}
-            >
-                <Text style={styles.textButton}>Criar tarefa</Text>
-            </TouchableOpacity>
-        </View>
-    )
-}
